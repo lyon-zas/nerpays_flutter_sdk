@@ -17,6 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  String _isNfcAvailable = 'Unknown';
   final _nearpaysFlutterSdkPlugin = NearpaysFlutterSdk();
 
   @override
@@ -28,13 +29,17 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
+    String isNfcAvailable;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _nearpaysFlutterSdkPlugin.getPlatformVersion() ?? 'Unknown platform version';
+      platformVersion = await _nearpaysFlutterSdkPlugin.getPlatformVersion() ??
+          'Unknown platform version';
+      isNfcAvailable = await _nearpaysFlutterSdkPlugin.getNfcAvailability() ??
+          'Unknown availability';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
+      isNfcAvailable = 'Failed to get availability.';
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -44,6 +49,7 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {
       _platformVersion = platformVersion;
+      _isNfcAvailable = isNfcAvailable;
     });
   }
 
@@ -55,7 +61,12 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Column(
+            children: [
+              Text('Running on: $_platformVersion\n'),
+              Text('NFC availability: $_isNfcAvailable\n'),
+            ],
+          ),
         ),
       ),
     );

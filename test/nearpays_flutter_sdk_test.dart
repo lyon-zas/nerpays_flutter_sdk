@@ -7,13 +7,19 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockNearpaysFlutterSdkPlatform
     with MockPlatformInterfaceMixin
     implements NearpaysFlutterSdkPlatform {
-
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+
+  @override
+ Future<String?> getNfcAvailability() => Future.value('true');
+ 
+  @override
+  Future<String?> swipeCard() => Future.value('value');
 }
 
 void main() {
-  final NearpaysFlutterSdkPlatform initialPlatform = NearpaysFlutterSdkPlatform.instance;
+  final NearpaysFlutterSdkPlatform initialPlatform =
+      NearpaysFlutterSdkPlatform.instance;
 
   test('$MethodChannelNearpaysFlutterSdk is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelNearpaysFlutterSdk>());
@@ -21,9 +27,19 @@ void main() {
 
   test('getPlatformVersion', () async {
     NearpaysFlutterSdk nearpaysFlutterSdkPlugin = NearpaysFlutterSdk();
-    MockNearpaysFlutterSdkPlatform fakePlatform = MockNearpaysFlutterSdkPlatform();
+    MockNearpaysFlutterSdkPlatform fakePlatform =
+        MockNearpaysFlutterSdkPlatform();
     NearpaysFlutterSdkPlatform.instance = fakePlatform;
 
     expect(await nearpaysFlutterSdkPlugin.getPlatformVersion(), '42');
+  });
+
+  test('getNfcAvailability', () async {
+    NearpaysFlutterSdk nearpaysFlutterSdkPlugin = NearpaysFlutterSdk();
+    MockNearpaysFlutterSdkPlatform fakePlatform =
+        MockNearpaysFlutterSdkPlatform();
+    NearpaysFlutterSdkPlatform.instance = fakePlatform;
+
+    expect(await nearpaysFlutterSdkPlugin.getNfcAvailability(), 'true');
   });
 }

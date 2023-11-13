@@ -8,7 +8,8 @@ abstract class NearpaysFlutterSdkPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static NearpaysFlutterSdkPlatform _instance = MethodChannelNearpaysFlutterSdk();
+  static NearpaysFlutterSdkPlatform _instance =
+      MethodChannelNearpaysFlutterSdk();
 
   /// The default instance of [NearpaysFlutterSdkPlatform] to use.
   ///
@@ -25,5 +26,13 @@ abstract class NearpaysFlutterSdkPlatform extends PlatformInterface {
 
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<String?> getNfcAvailability() {
+    throw UnimplementedError('getNfcAvailability() has not been implemented.');
+  }
+
+  Future<String?> swipeCard() {
+    throw UnimplementedError('swipeCard() has not been implemented.');
   }
 }
