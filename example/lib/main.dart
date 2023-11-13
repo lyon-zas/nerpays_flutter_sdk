@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:nearpays_flutter_sdk/nearpays_flutter_sdk.dart';
+import 'package:nearpays_flutter_sdk/nearpays_flutter_sdk_method_channel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,6 +20,7 @@ class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   String _isNfcAvailable = 'Unknown';
   final _nearpaysFlutterSdkPlugin = NearpaysFlutterSdk();
+  final _nearpaysFlutterSdkMethodChannel = MethodChannelNearpaysFlutterSdk();
 
   @override
   void initState() {
@@ -65,6 +67,12 @@ class _MyAppState extends State<MyApp> {
             children: [
               Text('Running on: $_platformVersion\n'),
               Text('NFC availability: $_isNfcAvailable\n'),
+              ElevatedButton(
+                onPressed: () {
+                  _nearpaysFlutterSdkMethodChannel.swipeCard();
+                },
+                child: Text('Swipe Card'),
+              )
             ],
           ),
         ),
